@@ -1,0 +1,29 @@
+name: Flutter CI
+
+# This workflow triggers on push or pull request to the main branch
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.0'
+          channel: 'stable'
+      
+      - name: Install dependencies
+        run: flutter pub get
+        
+      - name: Analyze code (Linting)
+        run: flutter analyze
+        
+      - name: Run Unit Tests
+        run: flutter test
